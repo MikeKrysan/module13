@@ -35,8 +35,12 @@ public class Bank {
     public static void main(String[] args) throws InterruptedException {
         Bank bank = new Bank();
         while(true){
-            System.out.println(bank.getMoney());
-            Thread.sleep(1000);
+            try {
+                System.out.println(bank.getMoney());
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                System.out.println("В банке недостаточно средств для выдачи кредита, пожалуйста, верните кредит чтобы взять еще");
+            }
         }
     }
 
