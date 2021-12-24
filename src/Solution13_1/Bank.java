@@ -2,21 +2,21 @@ package Solution13_1;
 
 public class Bank {
 
-   private int money = 10000;
+   private static int money = 10000;
 
     public int getMoney() {
         return money;
     }
 
-    void take(int money) {
-        this.money -= money;
+    static synchronized void take(int money) {
+        Bank.money -= money;
     }
 
-    void repay(int money) {
-        this.money += money;
+    static synchronized void repay(int money) {
+        Bank.money += money;
     }
 
-    class Client extends Thread{
+    static class Client extends Thread{
         @Override
         public void run() {
             while(true) {
@@ -26,21 +26,15 @@ public class Bank {
         }
     }
 
-    public Bank() {
-        new Client().start();
-        new Client().start();
-        new Client().start();
-    }
+
 
     public static void main(String[] args) throws InterruptedException {
-        Bank bank = new Bank();
+        new Client().start();
+        new Client().start();
+        new Client().start();
         while(true){
-            try {
-                System.out.println(bank.getMoney());
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                System.out.println("В банке недостаточно средств для выдачи кредита, пожалуйста, верните кредит чтобы взять еще");
-            }
+                System.out.println(Bank.money);
+                Thread.sleep(1000);
         }
     }
 
