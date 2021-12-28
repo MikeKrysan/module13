@@ -1,26 +1,24 @@
-package Solution13_5_Bank;
+package Solution13_6_Bank;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Bank {
-    private int money = 10000;
+    private AtomicInteger money = new AtomicInteger();
     private Object lock = new Object();
 
     int getMoney() {
-        return money;
+        return money.get();
     }
 
     void take(int money) {
         if (getMoney() >= 1000) {
-            synchronized (lock) {
-                this.money -= money;
-            }
+            this.money.addAndGet(-money);
         }
 
     }
 
     void repay(int money) {
-        synchronized (lock) {
-            this.money += money;
-        }
+        this.money.addAndGet(money);
     }
 
     class Client extends Thread {
@@ -29,7 +27,7 @@ public class Bank {
             while (true) {
                 if (getMoney() >= 1000) {
                     take(1000);
-                    repay(900);
+                    repay(1000);
                 }
             }
         }
@@ -37,13 +35,14 @@ public class Bank {
 
 
     public Bank() {
-        new Client().start();
-        new Client().start();
-        new Client().start();
+        money.set(10000);
+        for (int i = 0; i < 5; i++) {
+            new Client().start();
+        }
     }
 
     public static void main(String[] args) throws InterruptedException {
-        Bank bank = new Bank();
+        Solution13_6_Bank.Bank bank = new Solution13_6_Bank.Bank();
         while (true) {
             System.out.println(bank.money);
             Thread.sleep(1000);
