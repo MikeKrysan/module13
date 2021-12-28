@@ -18,26 +18,26 @@ public class ThreadPool {
             System.out.println("All tasks submitted");
         }
     }
+}
 
+class Work implements Runnable {
+    public int id;
 
-    static class Work implements Runnable {
-        public int id;
+    public Work(int id) {
+        this.id = id;
+    }
 
-        public Work(int id) {
-            this.id = id;
+    @Override
+    public void run() {
+        try {
+            Thread.sleep(4000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-
-        @Override
-        public void run() {
-            try {
-                Thread.sleep(4000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            System.out.println("Work " + id + " was completed");
-        }
+        System.out.println("Work " + id + " was completed");
     }
 }
+
 
 /*
 1. https://habr.com/ru/post/554608/
