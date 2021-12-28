@@ -25,7 +25,7 @@ public class Main {
         pizzeria.order("Pepperoni");
         Thread.sleep(100);
         pizzeria.order("Sicilian");
-        Thread.sleep(100);
+        Thread.sleep(48);
         pizzeria.order("Greek");
 
     }

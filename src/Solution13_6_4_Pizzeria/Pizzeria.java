@@ -33,11 +33,10 @@ class Pizzeria {
                 try {
                     order = orders.poll(10, TimeUnit.MILLISECONDS); //poll()- убирает из очереди и возвращает пользователю элемент, ждет определенное время, до того как элемент станет доступным, возвращает null, если время истекло.
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
                     break;
                 }
                 if(order != null) {
-                    if (System.currentTimeMillis() + 500 - order.orderTime <= 750) {
+                    if (System.currentTimeMillis() + (500 - order.orderTime) <= 750) {
                         //принять заказ
                         try {
                             Thread.sleep(500);
